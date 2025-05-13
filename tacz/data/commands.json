@@ -1,0 +1,3132 @@
+{
+  "file_operations": [
+    {
+      "command": "ls -la",
+      "explanation": "List all files including hidden ones with details",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "display",
+        "files",
+        "hidden",
+        "details",
+        "directory",
+        "permissions",
+        "ownership",
+        "view",
+        "show",
+        "ls"
+      ]
+    },
+    {
+      "command": "ls -laht",
+      "explanation": "List all files, including hidden ones, sorted by modification time",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "display",
+        "files",
+        "hidden",
+        "details",
+        "sort",
+        "time",
+        "recent",
+        "modified",
+        "chronological",
+        "directory",
+        "ls"
+      ]
+    },
+    {
+      "command": "dir /a",
+      "explanation": "List all files including hidden ones",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "display",
+        "files",
+        "hidden",
+        "directory",
+        "view",
+        "show",
+        "dir",
+        "all"
+      ]
+    },
+    {
+      "command": "dir /o:d",
+      "explanation": "List files sorted by date",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "display",
+        "files",
+        "sort",
+        "time",
+        "date",
+        "recent",
+        "modified",
+        "chronological",
+        "directory"
+      ]
+    },
+    {
+      "command": "find . -type f -name \"*.txt\"",
+      "explanation": "Find all .txt files in current directory and subdirectories",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "locate",
+        "text files",
+        "txt",
+        "recursive",
+        "filter",
+        "extension",
+        "subdirectories"
+      ]
+    },
+    {
+      "command": "find . -type f -mtime -7",
+      "explanation": "Find files modified in the last 7 days",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "locate",
+        "recent",
+        "modified",
+        "time",
+        "date",
+        "days",
+        "week",
+        "changes",
+        "recursive"
+      ]
+    },
+    {
+      "command": "dir /s /b *.txt",
+      "explanation": "Find all .txt files in current directory and subdirectories",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "locate",
+        "text files",
+        "txt",
+        "recursive",
+        "filter",
+        "extension",
+        "subdirectories",
+        "dir"
+      ]
+    },
+    {
+      "command": "forfiles /S /D +01/01/2023 /C \"cmd /c echo @path\"",
+      "explanation": "Find files modified after January 1, 2023",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "locate",
+        "modified",
+        "date",
+        "after",
+        "since",
+        "recursive",
+        "forfiles"
+      ]
+    }
+  ],
+  "file_size": [
+    {
+      "command": "du -sh *",
+      "explanation": "Show disk usage of all items in current directory",
+      "platform": "linux,macos",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "size",
+        "disk",
+        "usage",
+        "space",
+        "storage",
+        "directory",
+        "files",
+        "human-readable",
+        "du",
+        "list"
+      ]
+    },
+    {
+      "command": "du -sh",
+      "explanation": "Show disk usage of current directory",
+      "platform": "linux,macos",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "size",
+        "disk",
+        "usage",
+        "space",
+        "storage",
+        "directory",
+        "current",
+        "human-readable",
+        "du",
+        "total"
+      ]
+    },
+    {
+      "command": "find . -type f -exec du -sh {} \\; | sort -hr",
+      "explanation": "Show size of each file, sorted by size (largest first)",
+      "platform": "linux,macos",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "size",
+        "disk",
+        "usage",
+        "space",
+        "storage",
+        "files",
+        "sort",
+        "largest",
+        "find",
+        "list",
+        "human-readable"
+      ]
+    },
+    {
+      "command": "ls -la -S",
+      "explanation": "List files sorted by size (largest first)",
+      "platform": "macos",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "files",
+        "size",
+        "sort",
+        "largest",
+        "display",
+        "directory",
+        "ls",
+        "order"
+      ]
+    },
+    {
+      "command": "ls -la --sort=size",
+      "explanation": "List files sorted by size (largest first)",
+      "platform": "linux",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "files",
+        "size",
+        "sort",
+        "largest",
+        "display",
+        "directory",
+        "ls",
+        "order"
+      ]
+    },
+    {
+      "command": "find . -type f -size +10M -exec ls -lh {} \\;",
+      "explanation": "Find files larger than 10MB and show their details",
+      "platform": "linux,macos",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "large",
+        "files",
+        "size",
+        "filter",
+        "megabytes",
+        "MB",
+        "big",
+        "details"
+      ]
+    },
+    {
+      "command": "Get-ChildItem | Select-Object Name, Length | Sort-Object -Property Length -Descending",
+      "explanation": "List files with their size, sorted by size (largest first)",
+      "platform": "windows",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "list",
+        "files",
+        "size",
+        "sort",
+        "largest",
+        "powershell",
+        "display",
+        "directory",
+        "order"
+      ]
+    },
+    {
+      "command": "Get-ChildItem -Recurse | Measure-Object -Property Length -Sum",
+      "explanation": "Show total size of all files in current directory and subdirectories",
+      "platform": "windows",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "size",
+        "total",
+        "sum",
+        "directory",
+        "files",
+        "recursive",
+        "powershell",
+        "storage",
+        "space"
+      ]
+    },
+    {
+      "command": "Get-ChildItem -Recurse | Where-Object { $_.Length -gt 10MB } | Sort-Object Length -Descending",
+      "explanation": "Find files larger than 10MB, sorted by size",
+      "platform": "windows",
+      "category": "size",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "large",
+        "files",
+        "size",
+        "filter",
+        "megabytes",
+        "MB",
+        "big",
+        "powershell",
+        "sort"
+      ]
+    }
+  ],
+  "memory_usage": [
+    {
+      "command": "free -h",
+      "explanation": "Display memory usage in human-readable format",
+      "platform": "linux",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "usage",
+        "display",
+        "show",
+        "system",
+        "stats",
+        "available",
+        "free",
+        "human-readable"
+      ]
+    },
+    {
+      "command": "cat /proc/meminfo",
+      "explanation": "Show detailed memory information",
+      "platform": "linux",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "detailed",
+        "info",
+        "system",
+        "statistics",
+        "proc",
+        "cat",
+        "information"
+      ]
+    },
+    {
+      "command": "ps aux --sort=-%mem | head -n 10",
+      "explanation": "Show top 10 processes by memory usage",
+      "platform": "linux",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "processes",
+        "top",
+        "highest",
+        "usage",
+        "sort",
+        "ps",
+        "troubleshooting",
+        "resource",
+        "monitor",
+        "performance"
+      ]
+    },
+    {
+      "command": "vm_stat",
+      "explanation": "Display virtual memory statistics",
+      "platform": "macos",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "virtual",
+        "statistics",
+        "display",
+        "show",
+        "system",
+        "stats",
+        "vm",
+        "usage",
+        "pages"
+      ]
+    },
+    {
+      "command": "top -l 1 -s 0 | grep PhysMem",
+      "explanation": "Show physical memory usage",
+      "platform": "macos",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "physical",
+        "usage",
+        "top",
+        "display",
+        "show",
+        "system",
+        "PhysMem",
+        "stats"
+      ]
+    },
+    {
+      "command": "ps -axm -o %mem,rss,comm | sort -nr | head -10",
+      "explanation": "Show top 10 processes by memory usage",
+      "platform": "macos",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "processes",
+        "top",
+        "highest",
+        "usage",
+        "sort",
+        "ps",
+        "troubleshooting",
+        "resource",
+        "monitor",
+        "performance"
+      ]
+    },
+    {
+      "command": "systeminfo | findstr /C:\"Total Physical Memory\" /C:\"Available Physical Memory\"",
+      "explanation": "Display total and available physical memory",
+      "platform": "windows",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "total",
+        "available",
+        "system",
+        "information",
+        "display",
+        "physical",
+        "windows"
+      ]
+    },
+    {
+      "command": "Get-Process | Sort-Object -Property WorkingSet -Descending | Select-Object -First 10",
+      "explanation": "Show top 10 processes by memory usage",
+      "platform": "windows",
+      "category": "memory",
+      "dangerous": false,
+      "tags": [
+        "memory",
+        "RAM",
+        "processes",
+        "top",
+        "highest",
+        "usage",
+        "sort",
+        "powershell",
+        "troubleshooting",
+        "resource",
+        "monitor",
+        "performance",
+        "WorkingSet"
+      ]
+    }
+  ],
+  "disk_usage": [
+    {
+      "command": "df -h",
+      "explanation": "Show disk usage for all mounted filesystems",
+      "platform": "linux,macos",
+      "category": "disk",
+      "dangerous": false,
+      "tags": [
+        "disk",
+        "storage",
+        "filesystem",
+        "usage",
+        "space",
+        "mounted",
+        "partitions",
+        "drives",
+        "free",
+        "human-readable",
+        "df"
+      ]
+    },
+    {
+      "command": "du -h --max-depth=1 /",
+      "explanation": "Show disk usage of top-level directories",
+      "platform": "linux",
+      "category": "disk",
+      "dangerous": false,
+      "tags": [
+        "disk",
+        "storage",
+        "usage",
+        "space",
+        "directories",
+        "root",
+        "top-level",
+        "du",
+        "size",
+        "human-readable"
+      ]
+    },
+    {
+      "command": "du -hd 1 /",
+      "explanation": "Show disk usage of top-level directories",
+      "platform": "macos",
+      "category": "disk",
+      "dangerous": false,
+      "tags": [
+        "disk",
+        "storage",
+        "usage",
+        "space",
+        "directories",
+        "root",
+        "top-level",
+        "du",
+        "size",
+        "human-readable"
+      ]
+    },
+    {
+      "command": "find / -type f -size +100M -exec ls -lh {} \\; 2>/dev/null",
+      "explanation": "Find files larger than 100MB across the system",
+      "platform": "linux,macos",
+      "category": "disk",
+      "dangerous": false,
+      "tags": [
+        "find",
+        "search",
+        "large",
+        "files",
+        "size",
+        "system",
+        "disk",
+        "storage",
+        "megabytes",
+        "MB",
+        "big"
+      ]
+    },
+    {
+      "command": "wmic logicaldisk get deviceid, freespace, size, volumename",
+      "explanation": "Show disk space for all drives",
+      "platform": "windows",
+      "category": "disk",
+      "dangerous": false,
+      "tags": [
+        "disk",
+        "storage",
+        "drives",
+        "space",
+        "free",
+        "size",
+        "volumes",
+        "wmic",
+        "system",
+        "windows"
+      ]
+    },
+    {
+      "command": "Get-PSDrive | Where-Object {$_.Free -ne $null} | Format-Table Name, Provider, Root, @{Name=\"UsedGB\";Expression={[Math]::Round($_.Used/1GB, 2)}}, @{Name=\"FreeGB\";Expression={[Math]::Round($_.Free/1GB, 2)}}",
+      "explanation": "Show used and free space for all drives in GB",
+      "platform": "windows",
+      "category": "disk",
+      "dangerous": false,
+      "tags": [
+        "disk",
+        "storage",
+        "drives",
+        "space",
+        "free",
+        "used",
+        "gigabytes",
+        "GB",
+        "powershell",
+        "size",
+        "volumes"
+      ]
+    }
+  ],
+  "network": [
+    {
+      "command": "ping -c 4 google.com",
+      "explanation": "Check connectivity to Google by sending 4 packets",
+      "platform": "linux,macos",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "connectivity",
+        "ping",
+        "test",
+        "internet",
+        "connection",
+        "packets",
+        "latency",
+        "response",
+        "troubleshooting"
+      ]
+    },
+    {
+      "command": "curl ifconfig.me",
+      "explanation": "Show public IP address",
+      "platform": "linux,macos",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "IP",
+        "address",
+        "public",
+        "external",
+        "internet",
+        "curl",
+        "show",
+        "display",
+        "whatismyip"
+      ]
+    },
+    {
+      "command": "netstat -tuln",
+      "explanation": "List all open ports",
+      "platform": "linux",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "ports",
+        "listening",
+        "open",
+        "tcp",
+        "udp",
+        "connections",
+        "netstat",
+        "security",
+        "troubleshooting"
+      ]
+    },
+    {
+      "command": "lsof -i -P -n | grep LISTEN",
+      "explanation": "Show listening ports and associated processes",
+      "platform": "linux,macos",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "ports",
+        "listening",
+        "processes",
+        "open",
+        "connections",
+        "lsof",
+        "security",
+        "troubleshooting"
+      ]
+    },
+    {
+      "command": "ping -n 4 google.com",
+      "explanation": "Check connectivity to Google by sending 4 packets",
+      "platform": "windows",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "connectivity",
+        "ping",
+        "test",
+        "internet",
+        "connection",
+        "packets",
+        "latency",
+        "response",
+        "troubleshooting",
+        "windows"
+      ]
+    },
+    {
+      "command": "netstat -ano",
+      "explanation": "List all open ports and their associated processes",
+      "platform": "windows",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "ports",
+        "processes",
+        "open",
+        "connections",
+        "netstat",
+        "security",
+        "troubleshooting",
+        "windows",
+        "PID"
+      ]
+    },
+    {
+      "command": "traceroute google.com",
+      "explanation": "Trace route to Google",
+      "platform": "linux,macos",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "route",
+        "trace",
+        "hops",
+        "path",
+        "troubleshooting",
+        "diagnostics",
+        "connectivity",
+        "latency",
+        "traceroute"
+      ]
+    },
+    {
+      "command": "tracert google.com",
+      "explanation": "Trace route to Google",
+      "platform": "windows",
+      "category": "network",
+      "dangerous": false,
+      "tags": [
+        "network",
+        "route",
+        "trace",
+        "hops",
+        "path",
+        "troubleshooting",
+        "diagnostics",
+        "connectivity",
+        "latency",
+        "tracert",
+        "windows"
+      ]
+    }
+  ],
+  "process_management": [
+    {
+      "command": "ps aux",
+      "explanation": "Display all running processes",
+      "platform": "linux,macos",
+      "category": "process",
+      "dangerous": false,
+      "tags": [
+        "process",
+        "list",
+        "running",
+        "display",
+        "show",
+        "view",
+        "all",
+        "ps",
+        "system",
+        "monitor",
+        "troubleshooting"
+      ]
+    },
+    {
+      "command": "top",
+      "explanation": "Display dynamic real-time view of running processes",
+      "platform": "linux,macos",
+      "category": "process",
+      "dangerous": false,
+      "tags": [
+        "process",
+        "monitor",
+        "real-time",
+        "dynamic",
+        "cpu",
+        "memory",
+        "usage",
+        "system",
+        "performance",
+        "top",
+        "list",
+        "interactive"
+      ]
+    },
+    {
+      "command": "kill -9 PID",
+      "explanation": "Force kill a process by its PID",
+      "platform": "linux,macos",
+      "category": "process",
+      "dangerous": true,
+      "danger_reason": "Force kills a process which may cause data loss",
+      "tags": [
+        "kill",
+        "terminate",
+        "force",
+        "process",
+        "PID",
+        "stop",
+        "end",
+        "signal",
+        "SIGKILL",
+        "dangerous"
+      ]
+    },
+    {
+      "command": "pkill -f PATTERN",
+      "explanation": "Kill processes matching a pattern",
+      "platform": "linux,macos",
+      "category": "process",
+      "dangerous": true,
+      "danger_reason": "Kills processes which may cause data loss",
+      "tags": [
+        "kill",
+        "terminate",
+        "process",
+        "pattern",
+        "name",
+        "multiple",
+        "stop",
+        "end",
+        "pkill",
+        "dangerous",
+        "match"
+      ]
+    },
+    {
+      "command": "ps -ef | grep python",
+      "explanation": "Find all running Python processes",
+      "platform": "linux,macos",
+      "category": "process",
+      "dangerous": false,
+      "tags": [
+        "process",
+        "find",
+        "python",
+        "search",
+        "running",
+        "filter",
+        "list",
+        "ps",
+        "grep",
+        "specific"
+      ]
+    },
+    {
+      "command": "tasklist",
+      "explanation": "Display all running processes",
+      "platform": "windows",
+      "category": "process",
+      "dangerous": false,
+      "tags": [
+        "process",
+        "list",
+        "running",
+        "display",
+        "show",
+        "view",
+        "all",
+        "windows",
+        "system",
+        "monitor",
+        "tasklist"
+      ]
+    },
+    {
+      "command": "taskkill /F /PID PID",
+      "explanation": "Force kill a process by its PID",
+      "platform": "windows",
+      "category": "process",
+      "dangerous": true,
+      "danger_reason": "Force kills a process which may cause data loss",
+      "tags": [
+        "kill",
+        "terminate",
+        "force",
+        "process",
+        "PID",
+        "stop",
+        "end",
+        "windows",
+        "taskkill",
+        "dangerous"
+      ]
+    },
+    {
+      "command": "taskkill /F /IM process.exe",
+      "explanation": "Force kill a process by its name",
+      "platform": "windows",
+      "category": "process",
+      "dangerous": true,
+      "danger_reason": "Force kills a process which may cause data loss",
+      "tags": [
+        "kill",
+        "terminate",
+        "force",
+        "process",
+        "name",
+        "executable",
+        "stop",
+        "end",
+        "windows",
+        "taskkill",
+        "dangerous"
+      ]
+    },
+    {
+      "command": "Get-Process | Where-Object {$_.ProcessName -like \"*python*\"}",
+      "explanation": "Find all running Python processes",
+      "platform": "windows",
+      "category": "process",
+      "dangerous": false,
+      "tags": [
+        "process",
+        "find",
+        "python",
+        "search",
+        "running",
+        "filter",
+        "list",
+        "powershell",
+        "specific",
+        "Get-Process"
+      ]
+    }
+  ],
+  "file_manipulation": [
+    {
+      "command": "mkdir -p path/to/directory",
+      "explanation": "Create directory and parent directories if they don't exist",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "directory",
+        "create",
+        "folder",
+        "new",
+        "parent",
+        "path",
+        "recursive",
+        "mkdir",
+        "structure"
+      ]
+    },
+    {
+      "command": "touch file.txt",
+      "explanation": "Create an empty file or update timestamp of existing file",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "file",
+        "create",
+        "new",
+        "empty",
+        "timestamp",
+        "update",
+        "touch",
+        "modify"
+      ]
+    },
+    {
+      "command": "cp -r source_dir destination_dir",
+      "explanation": "Copy directory and its contents recursively",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "copy",
+        "directory",
+        "folder",
+        "recursive",
+        "duplicate",
+        "cp",
+        "backup",
+        "files"
+      ]
+    },
+    {
+      "command": "rsync -av source_dir/ destination_dir/",
+      "explanation": "Synchronize files between directories with progress display",
+      "platform": "linux,macos",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "sync",
+        "synchronize",
+        "copy",
+        "backup",
+        "directory",
+        "progress",
+        "rsync",
+        "files",
+        "folders",
+        "transfer"
+      ]
+    },
+    {
+      "command": "mkdir path\\to\\directory",
+      "explanation": "Create directory",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "directory",
+        "create",
+        "folder",
+        "new",
+        "path",
+        "mkdir",
+        "windows"
+      ]
+    },
+    {
+      "command": "copy /Y source destination",
+      "explanation": "Copy file overwriting destination if it exists",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "copy",
+        "file",
+        "overwrite",
+        "duplicate",
+        "windows",
+        "backup",
+        "transfer"
+      ]
+    },
+    {
+      "command": "xcopy /S /E /I source_dir destination_dir",
+      "explanation": "Copy directory and its contents recursively",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "copy",
+        "directory",
+        "folder",
+        "recursive",
+        "duplicate",
+        "xcopy",
+        "backup",
+        "files",
+        "windows"
+      ]
+    },
+    {
+      "command": "robocopy source_dir destination_dir /E",
+      "explanation": "Robust copy of directory and its contents",
+      "platform": "windows",
+      "category": "file",
+      "dangerous": false,
+      "tags": [
+        "copy",
+        "robust",
+        "directory",
+        "folder",
+        "robocopy",
+        "backup",
+        "files",
+        "windows",
+        "reliable",
+        "sync"
+      ]
+    }
+  ],
+  "text_processing": [
+    {
+      "command": "grep \"pattern\" file.txt",
+      "explanation": "Search for pattern in file",
+      "platform": "linux,macos",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "search",
+        "find",
+        "text",
+        "pattern",
+        "string",
+        "file",
+        "grep",
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "command": "grep -r \"pattern\" .",
+      "explanation": "Search recursively for pattern in all files",
+      "platform": "linux,macos",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "search",
+        "find",
+        "text",
+        "pattern",
+        "string",
+        "files",
+        "recursive",
+        "grep",
+        "directory",
+        "all"
+      ]
+    },
+    {
+      "command": "sed -i 's/old/new/g' file.txt",
+      "explanation": "Replace all occurrences of 'old' with 'new' in file",
+      "platform": "linux",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "replace",
+        "text",
+        "string",
+        "substitution",
+        "edit",
+        "file",
+        "sed",
+        "modify",
+        "all",
+        "occurrences"
+      ]
+    },
+    {
+      "command": "sed -i '' 's/old/new/g' file.txt",
+      "explanation": "Replace all occurrences of 'old' with 'new' in file",
+      "platform": "macos",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "replace",
+        "text",
+        "string",
+        "substitution",
+        "edit",
+        "file",
+        "sed",
+        "modify",
+        "all",
+        "occurrences",
+        "macos"
+      ]
+    },
+    {
+      "command": "awk '{print $1}' file.txt",
+      "explanation": "Print first column of file",
+      "platform": "linux,macos",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "column",
+        "field",
+        "extract",
+        "text",
+        "file",
+        "awk",
+        "processing",
+        "print",
+        "first",
+        "parse"
+      ]
+    },
+    {
+      "command": "findstr \"pattern\" file.txt",
+      "explanation": "Search for pattern in file",
+      "platform": "windows",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "search",
+        "find",
+        "text",
+        "pattern",
+        "string",
+        "file",
+        "findstr",
+        "windows",
+        "filter",
+        "match"
+      ]
+    },
+    {
+      "command": "findstr /S \"pattern\" *.*",
+      "explanation": "Search recursively for pattern in all files",
+      "platform": "windows",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "search",
+        "find",
+        "text",
+        "pattern",
+        "string",
+        "files",
+        "recursive",
+        "findstr",
+        "windows",
+        "directory",
+        "all"
+      ]
+    },
+    {
+      "command": "type file.txt | find \"pattern\"",
+      "explanation": "Search for pattern in file",
+      "platform": "windows",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "search",
+        "find",
+        "text",
+        "pattern",
+        "string",
+        "file",
+        "windows",
+        "filter",
+        "match",
+        "pipe"
+      ]
+    },
+    {
+      "command": "Select-String -Path file.txt -Pattern \"pattern\"",
+      "explanation": "Search for pattern in file",
+      "platform": "windows",
+      "category": "text",
+      "dangerous": false,
+      "tags": [
+        "search",
+        "find",
+        "text",
+        "pattern",
+        "string",
+        "file",
+        "powershell",
+        "filter",
+        "match",
+        "Select-String"
+      ]
+    }
+  ],
+  "system_info": [
+    {
+      "command": "uname -a",
+      "explanation": "Display system information",
+      "platform": "linux,macos",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "system",
+        "information",
+        "details",
+        "kernel",
+        "version",
+        "hostname",
+        "architecture",
+        "display",
+        "uname",
+        "os"
+      ]
+    },
+    {
+      "command": "lscpu",
+      "explanation": "Display CPU information",
+      "platform": "linux",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "cpu",
+        "processor",
+        "information",
+        "hardware",
+        "cores",
+        "architecture",
+        "specs",
+        "details",
+        "display",
+        "lscpu"
+      ]
+    },
+    {
+      "command": "lshw",
+      "explanation": "List hardware",
+      "platform": "linux",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "hardware",
+        "components",
+        "devices",
+        "system",
+        "list",
+        "information",
+        "details",
+        "specs",
+        "display",
+        "lshw"
+      ]
+    },
+    {
+      "command": "uptime",
+      "explanation": "Show how long the system has been running",
+      "platform": "linux,macos",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "uptime",
+        "time",
+        "running",
+        "system",
+        "boot",
+        "duration",
+        "load",
+        "availability",
+        "status",
+        "show"
+      ]
+    },
+    {
+      "command": "system_profiler SPHardwareDataType",
+      "explanation": "Display hardware information",
+      "platform": "macos",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "hardware",
+        "information",
+        "details",
+        "specs",
+        "system",
+        "mac",
+        "macos",
+        "display",
+        "model",
+        "serial"
+      ]
+    },
+    {
+      "command": "sysctl -a | grep cpu",
+      "explanation": "Display CPU information",
+      "platform": "macos",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "cpu",
+        "processor",
+        "information",
+        "details",
+        "specs",
+        "system",
+        "mac",
+        "macos",
+        "sysctl",
+        "display"
+      ]
+    },
+    {
+      "command": "systeminfo",
+      "explanation": "Display detailed system information",
+      "platform": "windows",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "system",
+        "information",
+        "windows",
+        "os",
+        "details",
+        "specs",
+        "hardware",
+        "software",
+        "display",
+        "systeminfo"
+      ]
+    },
+    {
+      "command": "wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed, status",
+      "explanation": "Display CPU information",
+      "platform": "windows",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "cpu",
+        "processor",
+        "information",
+        "cores",
+        "speed",
+        "details",
+        "specs",
+        "windows",
+        "wmic",
+        "hardware"
+      ]
+    },
+    {
+      "command": "Get-ComputerInfo",
+      "explanation": "Display detailed system information",
+      "platform": "windows",
+      "category": "system",
+      "dangerous": false,
+      "tags": [
+        "system",
+        "information",
+        "hardware",
+        "software",
+        "windows",
+        "powershell",
+        "details",
+        "specs",
+        "computer",
+        "os"
+      ]
+    }
+  ],
+  "archive_operations": [
+    {
+      "command": "tar -czf archive.tar.gz directory/",
+      "explanation": "Create a compressed tar archive",
+      "platform": "linux,macos",
+      "category": "archive",
+      "dangerous": false,
+      "tags": [
+        "archive",
+        "compress",
+        "tar",
+        "gzip",
+        "create",
+        "backup",
+        "directory",
+        "files",
+        "tarball",
+        "package"
+      ]
+    },
+    {
+      "command": "tar -xzf archive.tar.gz",
+      "explanation": "Extract a compressed tar archive",
+      "platform": "linux,macos",
+      "category": "archive",
+      "dangerous": false,
+      "tags": [
+        "extract",
+        "uncompress",
+        "unpack",
+        "tar",
+        "gzip",
+        "archive",
+        "files",
+        "tarball",
+        "restore",
+        "expand"
+      ]
+    },
+    {
+      "command": "zip -r archive.zip directory/",
+      "explanation": "Create a zip archive",
+      "platform": "linux,macos",
+      "category": "archive",
+      "dangerous": false,
+      "tags": [
+        "zip",
+        "compress",
+        "archive",
+        "create",
+        "backup",
+        "directory",
+        "files",
+        "package",
+        "recursive"
+      ]
+    },
+    {
+      "command": "unzip archive.zip",
+      "explanation": "Extract a zip archive",
+      "platform": "linux,macos",
+      "category": "archive",
+      "dangerous": false,
+      "tags": [
+        "unzip",
+        "extract",
+        "uncompress",
+        "unpack",
+        "archive",
+        "files",
+        "zip",
+        "restore",
+        "expand"
+      ]
+    },
+    {
+      "command": "Compress-Archive -Path directory -DestinationPath archive.zip",
+      "explanation": "Create a zip archive",
+      "platform": "windows",
+      "category": "archive",
+      "dangerous": false,
+      "tags": [
+        "zip",
+        "compress",
+        "archive",
+        "powershell",
+        "create",
+        "backup",
+        "directory",
+        "files",
+        "package",
+        "windows"
+      ]
+    },
+    {
+      "command": "Expand-Archive -Path archive.zip -DestinationPath directory",
+      "explanation": "Extract a zip archive",
+      "platform": "windows",
+      "category": "archive",
+      "dangerous": false,
+      "tags": [
+        "unzip",
+        "extract",
+        "uncompress",
+        "unpack",
+        "archive",
+        "powershell",
+        "files",
+        "zip",
+        "restore",
+        "windows"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "command": "chmod 755 file",
+      "explanation": "Change file permissions to rwxr-xr-x",
+      "platform": "linux,macos",
+      "category": "permissions",
+      "dangerous": false,
+      "tags": [
+        "permissions",
+        "change",
+        "chmod",
+        "file",
+        "access",
+        "rights",
+        "rwx",
+        "execute",
+        "read",
+        "write",
+        "security"
+      ]
+    },
+    {
+      "command": "chmod -R 755 directory",
+      "explanation": "Change directory permissions recursively",
+      "platform": "linux,macos",
+      "category": "permissions",
+      "dangerous": true,
+      "danger_reason": "Recursive permission change might affect many files",
+      "tags": [
+        "permissions",
+        "change",
+        "chmod",
+        "directory",
+        "recursive",
+        "access",
+        "rights",
+        "rwx",
+        "dangerous",
+        "security"
+      ]
+    },
+    {
+      "command": "chown user:group file",
+      "explanation": "Change file owner and group",
+      "platform": "linux,macos",
+      "category": "permissions",
+      "dangerous": false,
+      "tags": [
+        "owner",
+        "group",
+        "change",
+        "chown",
+        "file",
+        "permissions",
+        "ownership",
+        "user",
+        "security",
+        "access"
+      ]
+    },
+    {
+      "command": "chown -R user:group directory",
+      "explanation": "Change directory owner and group recursively",
+      "platform": "linux,macos",
+      "category": "permissions",
+      "dangerous": true,
+      "danger_reason": "Recursive ownership change might affect many files",
+      "tags": [
+        "owner",
+        "group",
+        "change",
+        "chown",
+        "recursive",
+        "directory",
+        "permissions",
+        "ownership",
+        "dangerous",
+        "security"
+      ]
+    },
+    {
+      "command": "icacls file /grant Username:F",
+      "explanation": "Grant full permissions to a user for a file",
+      "platform": "windows",
+      "category": "permissions",
+      "dangerous": false,
+      "tags": [
+        "permissions",
+        "grant",
+        "access",
+        "full",
+        "control",
+        "file",
+        "user",
+        "windows",
+        "icacls",
+        "security",
+        "rights"
+      ]
+    },
+    {
+      "command": "icacls directory /grant Everyone:F /T",
+      "explanation": "Grant full permissions to everyone for a directory recursively",
+      "platform": "windows",
+      "category": "permissions",
+      "dangerous": true,
+      "danger_reason": "Grants full access to everyone, security risk",
+      "tags": [
+        "permissions",
+        "grant",
+        "everyone",
+        "full",
+        "recursive",
+        "directory",
+        "dangerous",
+        "security",
+        "windows",
+        "icacls",
+        "risk"
+      ]
+    }
+  ],
+  "git": [
+    {
+      "command": "git init",
+      "explanation": "Initialize a new Git repository",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "init",
+        "repository",
+        "create",
+        "new",
+        "project",
+        "start",
+        "version control",
+        "initialize"
+      ]
+    },
+    {
+      "command": "git clone https://github.com/username/repository.git",
+      "explanation": "Clone a repository from GitHub",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "clone",
+        "repository",
+        "download",
+        "copy",
+        "github",
+        "remote",
+        "version control",
+        "project"
+      ]
+    },
+    {
+      "command": "git status",
+      "explanation": "Show the working tree status",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "status",
+        "changes",
+        "state",
+        "modified",
+        "staged",
+        "untracked",
+        "branch",
+        "check",
+        "working tree"
+      ]
+    },
+    {
+      "command": "git add .",
+      "explanation": "Add all changes to staging area",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "add",
+        "stage",
+        "changes",
+        "files",
+        "all",
+        "track",
+        "commit",
+        "preparation",
+        "index"
+      ]
+    },
+    {
+      "command": "git add filename",
+      "explanation": "Add specific file to staging area",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "add",
+        "stage",
+        "file",
+        "specific",
+        "track",
+        "commit",
+        "preparation",
+        "index",
+        "single"
+      ]
+    },
+    {
+      "command": "git commit -m \"commit message\"",
+      "explanation": "Commit staged changes with a message",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "commit",
+        "save",
+        "changes",
+        "message",
+        "snapshot",
+        "history",
+        "record",
+        "version",
+        "staged"
+      ]
+    },
+    {
+      "command": "git push origin branch-name",
+      "explanation": "Push commits to the remote repository",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "push",
+        "upload",
+        "remote",
+        "commits",
+        "branch",
+        "origin",
+        "repository",
+        "share",
+        "publish"
+      ]
+    },
+    {
+      "command": "git pull origin branch-name",
+      "explanation": "Fetch from and integrate with another repository or branch",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "pull",
+        "download",
+        "fetch",
+        "merge",
+        "remote",
+        "branch",
+        "origin",
+        "update",
+        "sync"
+      ]
+    },
+    {
+      "command": "git branch",
+      "explanation": "List all local branches",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "branch",
+        "list",
+        "local",
+        "branches",
+        "show",
+        "current",
+        "version control",
+        "display"
+      ]
+    },
+    {
+      "command": "git branch -a",
+      "explanation": "List all branches (local and remote)",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "branch",
+        "list",
+        "all",
+        "local",
+        "remote",
+        "branches",
+        "show",
+        "display",
+        "version control"
+      ]
+    },
+    {
+      "command": "git checkout branch-name",
+      "explanation": "Switch to another branch",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "checkout",
+        "switch",
+        "branch",
+        "change",
+        "move",
+        "navigate",
+        "working tree",
+        "update"
+      ]
+    },
+    {
+      "command": "git checkout -b new-branch",
+      "explanation": "Create and switch to a new branch",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "checkout",
+        "branch",
+        "create",
+        "new",
+        "switch",
+        "feature",
+        "development",
+        "start"
+      ]
+    },
+    {
+      "command": "git merge branch-name",
+      "explanation": "Merge specified branch into current branch",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "merge",
+        "branch",
+        "combine",
+        "integrate",
+        "changes",
+        "join",
+        "feature",
+        "development",
+        "history"
+      ]
+    },
+    {
+      "command": "git log",
+      "explanation": "Show commit logs",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "log",
+        "history",
+        "commits",
+        "changes",
+        "show",
+        "display",
+        "record",
+        "view",
+        "timeline"
+      ]
+    },
+    {
+      "command": "git log --oneline",
+      "explanation": "Show commit logs in one line format",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "log",
+        "history",
+        "commits",
+        "oneline",
+        "compact",
+        "brief",
+        "summary",
+        "display",
+        "condensed"
+      ]
+    },
+    {
+      "command": "git log --graph --oneline --all",
+      "explanation": "Show graphical representation of commit history for all branches",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "log",
+        "graph",
+        "history",
+        "visual",
+        "branches",
+        "all",
+        "tree",
+        "commits",
+        "display"
+      ]
+    },
+    {
+      "command": "git diff",
+      "explanation": "Show changes between commits, commit and working tree, etc",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "diff",
+        "difference",
+        "changes",
+        "compare",
+        "modification",
+        "working tree",
+        "commits",
+        "show",
+        "what changed"
+      ]
+    },
+    {
+      "command": "git stash",
+      "explanation": "Stash changes in working directory",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "stash",
+        "save",
+        "temporary",
+        "store",
+        "changes",
+        "working directory",
+        "hide",
+        "shelve",
+        "set aside"
+      ]
+    },
+    {
+      "command": "git stash pop",
+      "explanation": "Apply stashed changes and remove from stash",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "stash",
+        "pop",
+        "apply",
+        "restore",
+        "retrieve",
+        "changes",
+        "remove",
+        "working directory",
+        "continue"
+      ]
+    },
+    {
+      "command": "git fetch",
+      "explanation": "Download objects and refs from another repository",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "fetch",
+        "download",
+        "remote",
+        "repository",
+        "update",
+        "refs",
+        "objects",
+        "tracking",
+        "branches"
+      ]
+    },
+    {
+      "command": "git reset --hard HEAD",
+      "explanation": "Reset current HEAD to specified state, discarding all changes",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": true,
+      "danger_reason": "Discards all uncommitted changes",
+      "tags": [
+        "git",
+        "reset",
+        "hard",
+        "HEAD",
+        "discard",
+        "changes",
+        "revert",
+        "dangerous",
+        "undo",
+        "clean"
+      ]
+    },
+    {
+      "command": "git clean -fd",
+      "explanation": "Remove untracked files and directories from working tree",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": true,
+      "danger_reason": "Permanently removes untracked files",
+      "tags": [
+        "git",
+        "clean",
+        "remove",
+        "untracked",
+        "files",
+        "directories",
+        "delete",
+        "dangerous",
+        "working tree",
+        "purge"
+      ]
+    },
+    {
+      "command": "git remote -v",
+      "explanation": "Show remote repositories with URLs",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "remote",
+        "list",
+        "repositories",
+        "show",
+        "URLs",
+        "origins",
+        "connections",
+        "servers",
+        "verbose"
+      ]
+    },
+    {
+      "command": "git remote add origin https://github.com/username/repository.git",
+      "explanation": "Add a remote repository",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "repository",
+        "URL",
+        "connection",
+        "github",
+        "link",
+        "setup"
+      ]
+    },
+    {
+      "command": "git blame filename",
+      "explanation": "Show who last modified each line of a file",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "blame",
+        "author",
+        "changes",
+        "modifications",
+        "history",
+        "file",
+        "lines",
+        "who",
+        "track"
+      ]
+    },
+    {
+      "command": "git tag",
+      "explanation": "List all tags",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "tag",
+        "list",
+        "versions",
+        "releases",
+        "show",
+        "labels",
+        "marks",
+        "display",
+        "milestones"
+      ]
+    },
+    {
+      "command": "git tag -a v1.0 -m \"Version 1.0\"",
+      "explanation": "Create an annotated tag",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "tag",
+        "create",
+        "annotated",
+        "version",
+        "release",
+        "label",
+        "mark",
+        "milestone",
+        "message"
+      ]
+    },
+    {
+      "command": "git show commit-hash",
+      "explanation": "Show information about a specific commit",
+      "platform": "linux,macos,windows",
+      "category": "git",
+      "dangerous": false,
+      "tags": [
+        "git",
+        "show",
+        "commit",
+        "hash",
+        "details",
+        "changes",
+        "information",
+        "specific",
+        "display",
+        "history"
+      ]
+    }
+  ],
+  "performance": [
+    {
+      "command": "htop",
+      "explanation": "Interactive process viewer with real-time statistics",
+      "platform": "linux,macos",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "monitor",
+        "process",
+        "cpu",
+        "memory",
+        "interactive",
+        "real-time",
+        "system",
+        "resource",
+        "usage",
+        "top",
+        "htop"
+      ]
+    },
+    {
+      "command": "iostat",
+      "explanation": "Report CPU and I/O statistics",
+      "platform": "linux,macos",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "io",
+        "input",
+        "output",
+        "disk",
+        "cpu",
+        "statistics",
+        "monitor",
+        "system",
+        "device",
+        "iostat"
+      ]
+    },
+    {
+      "command": "vmstat",
+      "explanation": "Report virtual memory statistics",
+      "platform": "linux,macos",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "memory",
+        "virtual",
+        "statistics",
+        "swap",
+        "system",
+        "monitor",
+        "usage",
+        "report",
+        "vmstat"
+      ]
+    },
+    {
+      "command": "sar",
+      "explanation": "Collect, report, or save system activity information",
+      "platform": "linux",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "system",
+        "activity",
+        "monitor",
+        "report",
+        "historical",
+        "statistics",
+        "cpu",
+        "memory",
+        "network",
+        "sar"
+      ]
+    },
+    {
+      "command": "dstat",
+      "explanation": "Versatile tool for generating system resource statistics",
+      "platform": "linux",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "system",
+        "resource",
+        "statistics",
+        "monitor",
+        "cpu",
+        "memory",
+        "disk",
+        "network",
+        "versatile",
+        "dstat"
+      ]
+    },
+    {
+      "command": "perfmon",
+      "explanation": "Launch Windows Performance Monitor",
+      "platform": "windows",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "monitor",
+        "windows",
+        "system",
+        "resource",
+        "usage",
+        "cpu",
+        "memory",
+        "disk",
+        "network",
+        "perfmon"
+      ]
+    },
+    {
+      "command": "typeperf \"\\Processor(_Total)\\% Processor Time\" -sc 5",
+      "explanation": "Measure CPU usage for 5 samples",
+      "platform": "windows",
+      "category": "performance",
+      "dangerous": false,
+      "tags": [
+        "performance",
+        "cpu",
+        "usage",
+        "measure",
+        "processor",
+        "windows",
+        "samples",
+        "monitor",
+        "percentage",
+        "typeperf"
+      ]
+    }
+  ],
+  "user_management": [
+    {
+      "command": "useradd username",
+      "explanation": "Create a new user",
+      "platform": "linux",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "create",
+        "account",
+        "add",
+        "new",
+        "linux",
+        "system",
+        "administration",
+        "useradd",
+        "management"
+      ]
+    },
+    {
+      "command": "usermod -aG groupname username",
+      "explanation": "Add user to a group",
+      "platform": "linux",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "group",
+        "add",
+        "modify",
+        "membership",
+        "linux",
+        "permissions",
+        "usermod",
+        "access",
+        "management"
+      ]
+    },
+    {
+      "command": "userdel username",
+      "explanation": "Delete a user",
+      "platform": "linux",
+      "category": "user",
+      "dangerous": true,
+      "danger_reason": "Permanently removes user account",
+      "tags": [
+        "user",
+        "delete",
+        "remove",
+        "account",
+        "linux",
+        "system",
+        "administration",
+        "userdel",
+        "dangerous",
+        "management"
+      ]
+    },
+    {
+      "command": "passwd username",
+      "explanation": "Change user password",
+      "platform": "linux",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "password",
+        "change",
+        "security",
+        "authentication",
+        "linux",
+        "passwd",
+        "modify",
+        "account",
+        "management"
+      ]
+    },
+    {
+      "command": "groupadd groupname",
+      "explanation": "Create a new group",
+      "platform": "linux",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "group",
+        "create",
+        "add",
+        "new",
+        "linux",
+        "system",
+        "administration",
+        "groupadd",
+        "management",
+        "permissions"
+      ]
+    },
+    {
+      "command": "dscl . -create /Users/username",
+      "explanation": "Create a new user (multiple commands required)",
+      "platform": "macos",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "create",
+        "account",
+        "add",
+        "new",
+        "macos",
+        "system",
+        "administration",
+        "dscl",
+        "directory",
+        "management"
+      ]
+    },
+    {
+      "command": "dscl . -append /Groups/groupname GroupMembership username",
+      "explanation": "Add user to a group",
+      "platform": "macos",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "group",
+        "add",
+        "membership",
+        "macos",
+        "system",
+        "administration",
+        "dscl",
+        "directory",
+        "permissions",
+        "management"
+      ]
+    },
+    {
+      "command": "Net User username password /ADD",
+      "explanation": "Create a new user with password",
+      "platform": "windows",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "create",
+        "account",
+        "add",
+        "new",
+        "windows",
+        "password",
+        "net",
+        "administration",
+        "management"
+      ]
+    },
+    {
+      "command": "Net LocalGroup groupname username /ADD",
+      "explanation": "Add user to a local group",
+      "platform": "windows",
+      "category": "user",
+      "dangerous": false,
+      "tags": [
+        "user",
+        "group",
+        "add",
+        "local",
+        "membership",
+        "windows",
+        "net",
+        "administration",
+        "permissions",
+        "management"
+      ]
+    }
+  ],
+  "docker": [
+    {
+      "command": "docker --version",
+      "explanation": "Show Docker version information",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "version",
+        "information",
+        "show",
+        "display",
+        "check",
+        "system",
+        "container",
+        "engine",
+        "info"
+      ]
+    },
+    {
+      "command": "docker info",
+      "explanation": "Display system-wide Docker information",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "information",
+        "system",
+        "details",
+        "config",
+        "display",
+        "containers",
+        "images",
+        "settings",
+        "status"
+      ]
+    },
+    {
+      "command": "docker ps",
+      "explanation": "List running containers",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "containers",
+        "list",
+        "running",
+        "active",
+        "show",
+        "display",
+        "ps",
+        "status",
+        "processes"
+      ]
+    },
+    {
+      "command": "docker ps -a",
+      "explanation": "List all containers (running and stopped)",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "containers",
+        "list",
+        "all",
+        "running",
+        "stopped",
+        "show",
+        "display",
+        "ps",
+        "status"
+      ]
+    },
+    {
+      "command": "docker images",
+      "explanation": "List all images",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "images",
+        "list",
+        "all",
+        "available",
+        "show",
+        "display",
+        "repository",
+        "local",
+        "status"
+      ]
+    },
+    {
+      "command": "docker pull image-name",
+      "explanation": "Pull an image from Docker Hub",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "pull",
+        "image",
+        "download",
+        "fetch",
+        "registry",
+        "hub",
+        "repository",
+        "get",
+        "retrieve"
+      ]
+    },
+    {
+      "command": "docker build -t image-name .",
+      "explanation": "Build an image from a Dockerfile in current directory",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "build",
+        "image",
+        "create",
+        "dockerfile",
+        "tag",
+        "compile",
+        "construct",
+        "make",
+        "development"
+      ]
+    },
+    {
+      "command": "docker run -d --name container-name image-name",
+      "explanation": "Run a container in detached mode with a specific name",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "run",
+        "container",
+        "start",
+        "detached",
+        "background",
+        "daemon",
+        "name",
+        "create",
+        "launch"
+      ]
+    },
+    {
+      "command": "docker run -it --rm image-name bash",
+      "explanation": "Run a container interactively with a bash shell and remove on exit",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "run",
+        "container",
+        "interactive",
+        "terminal",
+        "bash",
+        "shell",
+        "temporary",
+        "remove",
+        "command"
+      ]
+    },
+    {
+      "command": "docker exec -it container-name bash",
+      "explanation": "Execute a command in a running container with interactive shell",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "exec",
+        "execute",
+        "command",
+        "container",
+        "running",
+        "interactive",
+        "bash",
+        "shell",
+        "terminal"
+      ]
+    },
+    {
+      "command": "docker stop container-name",
+      "explanation": "Stop a running container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "stop",
+        "container",
+        "halt",
+        "pause",
+        "running",
+        "terminate",
+        "shutdown",
+        "end",
+        "graceful"
+      ]
+    },
+    {
+      "command": "docker start container-name",
+      "explanation": "Start a stopped container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "start",
+        "container",
+        "begin",
+        "launch",
+        "stopped",
+        "run",
+        "resume",
+        "activate",
+        "initialize"
+      ]
+    },
+    {
+      "command": "docker restart container-name",
+      "explanation": "Restart a container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "restart",
+        "container",
+        "reboot",
+        "reload",
+        "stop",
+        "start",
+        "reset",
+        "refresh",
+        "relaunch"
+      ]
+    },
+    {
+      "command": "docker rm container-name",
+      "explanation": "Remove a container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "remove",
+        "container",
+        "delete",
+        "erase",
+        "cleanup",
+        "destroy",
+        "rm",
+        "uninstall",
+        "discard"
+      ]
+    },
+    {
+      "command": "docker rmi image-name",
+      "explanation": "Remove an image",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "remove",
+        "image",
+        "delete",
+        "erase",
+        "cleanup",
+        "repository",
+        "rmi",
+        "uninstall",
+        "discard"
+      ]
+    },
+    {
+      "command": "docker rm $(docker ps -a -q)",
+      "explanation": "Remove all stopped containers",
+      "platform": "linux,macos",
+      "category": "docker",
+      "dangerous": true,
+      "danger_reason": "Removes all stopped containers without confirmation",
+      "tags": [
+        "docker",
+        "remove",
+        "all",
+        "containers",
+        "stopped",
+        "delete",
+        "cleanup",
+        "dangerous",
+        "batch",
+        "purge"
+      ]
+    },
+    {
+      "command": "FOR /f \"tokens=*\" %i IN ('docker ps -a -q') DO docker rm %i",
+      "explanation": "Remove all stopped containers (Windows CMD)",
+      "platform": "windows",
+      "category": "docker",
+      "dangerous": true,
+      "danger_reason": "Removes all stopped containers without confirmation",
+      "tags": [
+        "docker",
+        "remove",
+        "all",
+        "containers",
+        "stopped",
+        "windows",
+        "cmd",
+        "batch",
+        "dangerous",
+        "purge"
+      ]
+    },
+    {
+      "command": "docker rmi $(docker images -q)",
+      "explanation": "Remove all images",
+      "platform": "linux,macos",
+      "category": "docker",
+      "dangerous": true,
+      "danger_reason": "Removes all images without confirmation",
+      "tags": [
+        "docker",
+        "remove",
+        "all",
+        "images",
+        "delete",
+        "cleanup",
+        "dangerous",
+        "purge",
+        "rmi",
+        "batch"
+      ]
+    },
+    {
+      "command": "FOR /f \"tokens=*\" %i IN ('docker images -q') DO docker rmi %i",
+      "explanation": "Remove all images (Windows CMD)",
+      "platform": "windows",
+      "category": "docker",
+      "dangerous": true,
+      "danger_reason": "Removes all images without confirmation",
+      "tags": [
+        "docker",
+        "remove",
+        "all",
+        "images",
+        "windows",
+        "cmd",
+        "batch",
+        "dangerous",
+        "purge",
+        "delete"
+      ]
+    },
+    {
+      "command": "docker logs container-name",
+      "explanation": "Fetch the logs of a container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "logs",
+        "container",
+        "output",
+        "console",
+        "messages",
+        "debugging",
+        "troubleshooting",
+        "history",
+        "stdout"
+      ]
+    },
+    {
+      "command": "docker logs -f container-name",
+      "explanation": "Follow the logs of a container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "logs",
+        "follow",
+        "container",
+        "output",
+        "stream",
+        "real-time",
+        "continuous",
+        "debugging",
+        "tail"
+      ]
+    },
+    {
+      "command": "docker-compose up",
+      "explanation": "Create and start containers defined in docker-compose.yml",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "compose",
+        "up",
+        "start",
+        "create",
+        "containers",
+        "services",
+        "yml",
+        "configuration",
+        "multiple"
+      ]
+    },
+    {
+      "command": "docker-compose up -d",
+      "explanation": "Create and start containers in detached mode",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "compose",
+        "up",
+        "detached",
+        "background",
+        "daemon",
+        "start",
+        "create",
+        "services",
+        "multiple"
+      ]
+    },
+    {
+      "command": "docker-compose down",
+      "explanation": "Stop and remove containers, networks, volumes defined in docker-compose.yml",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "compose",
+        "down",
+        "stop",
+        "remove",
+        "cleanup",
+        "containers",
+        "networks",
+        "volumes",
+        "services"
+      ]
+    },
+    {
+      "command": "docker-compose ps",
+      "explanation": "List containers managed by docker-compose",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "compose",
+        "ps",
+        "list",
+        "containers",
+        "status",
+        "services",
+        "running",
+        "show",
+        "display"
+      ]
+    },
+    {
+      "command": "docker network ls",
+      "explanation": "List all networks",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "network",
+        "list",
+        "networks",
+        "connectivity",
+        "bridges",
+        "overlay",
+        "show",
+        "display",
+        "status"
+      ]
+    },
+    {
+      "command": "docker volume ls",
+      "explanation": "List all volumes",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "volume",
+        "list",
+        "volumes",
+        "storage",
+        "persistent",
+        "data",
+        "show",
+        "display",
+        "status"
+      ]
+    },
+    {
+      "command": "docker system prune",
+      "explanation": "Remove all unused containers, networks, images and build cache",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": true,
+      "danger_reason": "Removes unused resources which might be needed later",
+      "tags": [
+        "docker",
+        "system",
+        "prune",
+        "cleanup",
+        "remove",
+        "unused",
+        "dangerous",
+        "space",
+        "maintenance",
+        "all"
+      ]
+    },
+    {
+      "command": "docker stats",
+      "explanation": "Display a live stream of container resource usage statistics",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "stats",
+        "statistics",
+        "resource",
+        "usage",
+        "monitor",
+        "containers",
+        "real-time",
+        "cpu",
+        "memory"
+      ]
+    },
+    {
+      "command": "docker inspect container-name",
+      "explanation": "Return low-level information on Docker objects",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "inspect",
+        "information",
+        "details",
+        "container",
+        "configuration",
+        "metadata",
+        "json",
+        "settings",
+        "properties"
+      ]
+    },
+    {
+      "command": "docker cp container-name:/path/to/file /local/path",
+      "explanation": "Copy files from a container to the local filesystem",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "copy",
+        "files",
+        "container",
+        "local",
+        "filesystem",
+        "transfer",
+        "export",
+        "extract",
+        "cp"
+      ]
+    },
+    {
+      "command": "docker cp /local/path container-name:/path/in/container",
+      "explanation": "Copy files from local filesystem to a container",
+      "platform": "linux,macos,windows",
+      "category": "docker",
+      "dangerous": false,
+      "tags": [
+        "docker",
+        "copy",
+        "files",
+        "local",
+        "container",
+        "filesystem",
+        "transfer",
+        "import",
+        "inject",
+        "cp"
+      ]
+    }
+  ]
+}

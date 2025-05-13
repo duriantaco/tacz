@@ -1,0 +1,46 @@
+[project]
+name = "tacz"
+version = "1.0.0"
+description = "Local command assistant using Ollama"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "openai>=1.72.0",
+    "pydantic>=2.10.6",
+    "pyperclip>=1.9.0",
+    "python-dotenv>=1.0.1",
+    "questionary>=2.1.0",
+    "rich>=13.9.4",
+    "keyring>=24.3.0",
+    "requests>=2.31.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.2",
+    "isort>=5.13.2",
+    "pytest>=7.4.0",
+    "black>=23.12.0",
+]
+
+[project.scripts]
+tacz = "tacz.main:app"
+
+[project.urls]
+Repository = "https://github.com/duriantaco/tacz"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 120
+lint.select = ["I001"]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
