@@ -72,5 +72,17 @@ DANGEROUS_PATTERNS = [
     (r"\bmv\s+-R\s+",                 "Recursive move"),
     (r"\bexport\s+PATH\s*=\s*.*\b",   "Modifying PATH variable"),
     (r"\bexport\s+LD_PRELOAD\s*=\s*.*\b", "Modifying LD_PRELOAD variable"),
-    (r"\bexport\s+LD_LIBRARY_PATH\s*=\s*.*\b", "Modifying LD_LIBRARY_PATH variable")
+    (r"\bexport\s+LD_LIBRARY_PATH\s*=\s*.*\b", "Modifying LD_LIBRARY_PATH variable"),
+    (r".*;.*rm\s+", "Command contains deletion after separator (;)"),
+    (r".*&&.*rm\s+",                    "Command contains deletion after logical AND (&&)"),
+    (r".*\|\|.*rm\s+",                  "Command contains deletion after logical OR (||)"),
+    (r".*`.*`",                         "Command contains command substitution (backticks)"),
+    (r".*\$\(.*\)",                     "Command contains command substitution ($(command))"),
+    (r".*[><]\s*/etc/",                 "Command redirects to system configuration files"),
+    (r".*[><]\s*/dev/",                 "Command redirects to device files"),
+    (r"\brm\s+(?!-i\b).*", "File deletion without confirmation flag (-i)"),
+    (r"\brm\s+-[a-zA-Z]*[fF][a-zA-Z]*\s+", "Forced deletion with rm -f"),
+    (r"\brm\s+-[a-zA-Z]*[rR][a-zA-Z]*\s+", "Recursive deletion with rm -r"),
+    (r"\brm\s+-[a-zA-Z]*[rR][a-zA-Z]*[fF][a-zA-Z]*\s+", "Dangerous recursive forced deletion"),
+    (r"\brm\s+-[a-zA-Z]*[fF][a-zA-Z]*[rR][a-zA-Z]*\s+", "Dangerous recursive forced deletion"),
 ]

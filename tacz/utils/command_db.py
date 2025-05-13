@@ -73,9 +73,7 @@ class CommandDatabase:
         # fts5 virtual table for full-text search
         cursor.execute('''
         CREATE VIRTUAL TABLE IF NOT EXISTS command_fts USING fts5(
-            command, explanation, category, tags,
-            content='commands',
-            content_rowid='id'
+            command, explanation, category, tags
         )
         ''')
         

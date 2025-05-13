@@ -7,6 +7,8 @@ import dotenv
 import pyperclip
 import questionary
 import shutil
+import re
+import atexit
 
 from rich import print as rprint
 from rich.console import Console
@@ -18,13 +20,30 @@ from rich.live import Live
 from tacz.config.setup import run_setup
 from tacz.llms.providers.ollama_provider import OllamaProvider
 from tacz.utils.os_detect import get_os_info, get_available_tools
+from tacz.utils.safety import has_command_chaining, is_rm_command, sanitize_command
+
+_provider_instance = None
+
+def get_provider():
+    global _provider_instance
+    if _provider_instance is None:
+        _provider_instance = OllamaProvider()
+    return _provider_instance
+
+def cleanup():
+    """Clean up resources before exit"""
+    global _provider_instance
+    if _provider_instance is not None:
+        _provider_instance.db.close()
+
+atexit.register(cleanup)
 
 def setup():
     run_setup()
 
 def show_history():
     try:
-        provider = OllamaProvider()
+        provider = get_provider()
         history = provider.get_command_history(limit=20)
         
         if not history:
@@ -122,25 +141,48 @@ def edit_command(command: str) -> str:
     return edited if edited else command
 
 def break_down_command(command: str) -> dict:
-    """Break down a command into components for better understanding"""
-    parts = command.split()
-    if not parts:
+    if not command:
         return {"command": "", "args": []}
-    
-    base_command = parts[0]
-    args = []
-    
-    for part in parts[1:]:
-        if part.startswith('-'):
-            arg_type = "option"
-        else:
-            arg_type = "value"
         
-        args.append({"value": part, "type": arg_type})
+    if command.count(" ") <= 1 and not any(op in command for op in "|;&><"):
+        parts = command.split()
+        if not parts:
+            return {"command": "", "args": []}
+        if len(parts) == 1:
+            return {"command": parts[0], "args": []}
+
+        arg = parts[1]
+        arg_type = "option" if arg.startswith("-") else "value"
+        return {"command": parts[0], "args": [{"value": arg, "type": arg_type}]}
+    
+    if '|' not in command and ';' not in command and '&&' not in command and '||' not in command:
+        parts = command.split()
+        if not parts:
+            return {"command": "", "args": []}
+        
+        base_command = parts[0]
+        args = []
+        
+        for part in parts[1:]:
+            if part.startswith('-'):
+                arg_type = "option"
+            else:
+                arg_type = "value"
+            
+            args.append({"value": part, "type": arg_type})
+        
+        return {
+            "command": base_command,
+            "args": args
+        }
+    
+    first_part = re.split(r'[|;&]', command)[0].strip()
+    parts = first_part.split()
+    base_command = parts[0] if parts else ""
     
     return {
         "command": base_command,
-        "args": args
+        "args": [{"value": command[len(base_command):].strip(), "type": "complex"}]
     }
 
 def show_options(query: str):
@@ -286,11 +328,13 @@ def show_options(query: str):
             print()
         
         parts = break_down_command(selected.command)
+        has_chains, operators = has_command_chaining(selected.command)
+
+        breakdown = Text()
+        breakdown.append(f"Command: ", style="bold")
+        breakdown.append(f"{parts['command']}\n", style="cyan bold")
+
         if parts["args"]:
-            breakdown = Text()
-            breakdown.append(f"Command: ", style="bold")
-            breakdown.append(f"{parts['command']}\n", style="cyan bold")
-            
             breakdown.append("Arguments:\n", style="bold")
             for arg in parts["args"]:
                 if arg["type"] == "option":
@@ -298,12 +342,20 @@ def show_options(query: str):
                 else:
                     breakdown.append(f"  {arg['value']}", style="green")
                 breakdown.append("\n")
-                
-            console.print(Panel(breakdown, title="Command Breakdown", border_style="blue"))
-            print()
+
+        if has_chains:
+            breakdown.append("\nCommand contains these operations:\n", style="bold yellow")
+            for op in operators:
+                breakdown.append(f"  • {op}\n", style="yellow")
+            
+            breakdown.append("\nThis command will execute multiple operations. Please review carefully.\n", style="yellow")
+
+        console.print(Panel(breakdown, title="Command Breakdown", border_style="blue"))
+        print()
         
         final_command = edit_command(selected.command)
-        
+        final_command = sanitize_command(final_command)
+
         console.print(Panel(final_command, title="Command", border_style="blue"))
         
         try:
@@ -321,6 +373,23 @@ def show_options(query: str):
             rprint("[green]✓[/green] Added to favorites!")
         
         if questionary.confirm("Execute this command?", default=False).ask():
+            if is_rm_command(final_command):
+                rm_warning = Panel(
+                    f"[bold red]⚠️ DELETION WARNING ⚠️[/bold red]\n\n"
+                    f"This command uses [bold]rm[/bold] which permanently deletes files!\n"
+                    f"There is [bold]NO UNDO[/bold] for this operation.\n\n"
+                    f"Type [bold yellow]\"YES DELETE\"[/bold yellow] to confirm you want to proceed:",
+                    title="Deletion Confirmation Required",
+                    border_style="red"
+                )
+                console.print(rm_warning)
+                
+                deletion_confirmation = input("Confirmation (type 'YES DELETE' to proceed): ")
+                
+                if deletion_confirmation != "YES DELETE":
+                    rprint("[yellow]Command cancelled.[/yellow]")
+                    return
+                
             print("\n" + "="*50)
             rprint(f"[cyan]Running:[/cyan] {final_command}")
             print("="*50)

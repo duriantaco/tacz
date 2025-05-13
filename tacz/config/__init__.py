@@ -10,6 +10,14 @@ class Config:
         self.config_path = Path.home() / ".taczrc"
         self.vals = dotenv_values(self.config_path)
         self.keyring_service = "tacz"
+
+    def get_tacz_dir(self):
+        tacz_dir = Path.home() / ".tacz"
+        tacz_dir.mkdir(exist_ok=True)
+        return tacz_dir
+    
+    def get_db_path(self):
+        return self.get_tacz_dir() / "commands.db"
     
     def get_secure_value(self, key: str, env_var: str) -> Optional[str]:
         value = os.getenv(env_var)
@@ -49,3 +57,9 @@ class Config:
         return self.vals.get("ENABLE_HISTORY", "true").lower() == "true"
 
 config = Config()
+
+def get_tacz_dir():
+    return config.get_tacz_dir()
+
+def get_db_path():
+    return config.get_db_path()

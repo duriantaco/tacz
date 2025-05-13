@@ -8,15 +8,28 @@
 ![PyPI version](https://img.shields.io/pypi/v/tacz)
 ![Python versions](https://img.shields.io/pypi/pyversions/tacz)
 
-## 🚀 Features
+## 🔧 How It Works
 
-- ✨ Fully local operation using Ollama
-- 🧠 Smart command suggestions with explanations
-- 🛡️ Enhanced safety checks for dangerous commands
-- 📚 Command history and favorites
-- ⚡ Cached responses for faster performance
-- 🎯 Context-aware suggestions based on your environment
-- 📝 Command editing before execution
+Tacz combines local language models with a sophisticated command database to deliver accurate, contextual terminal commands:
+
+### Database Architecture
+- **SQLite Storage**: All commands and history are stored locally in SQLite
+- **Full-Text Search**: Uses SQLite's FTS5 virtual tables for efficient natural language queries
+- **Tag System**: Commands are tagged for semantic matching even when exact wording differs
+
+### Command Retrieval
+1. **Hybrid Search**: First attempts database lookups before calling the LLM
+2. **OS Awareness**: Filters commands by your OS (Linux/macOS/Windows)
+3. **Popularity Ranking**: Frequently used commands are prioritized in results
+
+### LLM
+- **JSON Parsing**: Processes LLM responses with multiple fallback mechanisms for reliability
+- **Command Learning**: New commands discovered via LLMs are stored in the database for future use
+
+### Safety Mechanisms
+- **Pattern Detection**: Uses regex patterns to identify potentially dangerous operations
+- **Command Breakdown**: Analyzes command components to help users understand what they're running
+- **Interactive Confirmation**: Requires explicit approval before executing risky commands
 
 ## 📋 Prerequisites
 
@@ -171,6 +184,37 @@ tacz 'undo last commit but keep changes'
 tacz 'list running containers with exposed ports'
 tacz 'clean up unused docker resources'
 ```
+
+## 🔒 Data & Privacy
+
+Tacz is designed with a local-first approach to ensure your data never leaves your machine:
+
+### Data Flow
+
+1. **Initial Setup**: When you first run Tacz, a SQLite database is created in your home directory (`~/.tacz/commands.db`)
+
+2. **Command Preloading**: The database is populated with a curated set of common terminal commands from our bundled data files
+
+3. **Command Generation**: When no matching commands are found in the database:
+   - Your query and system context are sent to your local Ollama instance
+   - Generated commands are stored in your database for future reuse
+   - No data is ever sent to external servers
+
+4. **Learning from Usage**: As you use Tacz:
+   - Commands you execute get a higher "popularity" score
+   - Favorites you save are tagged for easier retrieval
+   - Command history is recorded locally for your reference
+
+### Database Contents
+
+Your local SQLite database contains:
+
+- **Commands**: Terminal commands with explanations and safety ratings
+- **Tags**: Semantic labels for improved command retrieval 
+- **History**: Your command usage history (what you ran and when)
+- **Favorites**: Commands you've explicitly saved
+
+All of this data remains entirely on your machine and can be inspected or deleted at any time by accessing the database file at `~/.tacz/commands.db`.
 
 ## 🤝 Contributing
 

@@ -9,6 +9,8 @@ from tacz.config import config
 from tacz.llms.types import CommandsResponse, Command
 from tacz.utils.command_db import CommandDatabase
 from tacz.utils.safety import is_dangerous_command
+from tacz.constants import PROMPT
+from tacz.config import get_db_path
 
 class OllamaProvider:
     def __init__(self):
@@ -20,11 +22,7 @@ class OllamaProvider:
         self.client = OpenAI(base_url=config.ollama_base_url, api_key="ollama")
         self.model = config.ollama_model
         
-        home = Path.home() / ".tacz"
-        home.mkdir(exist_ok=True)
-        self.db = CommandDatabase(home / "commands.db")
-        
-        from tacz.constants import PROMPT
+        self.db = CommandDatabase(get_db_path())
         self.prompt_template = PROMPT
     
     def get_options(self, prompt: str, context: str, display_callback=None) -> Optional[CommandsResponse]:
@@ -170,5 +168,4 @@ class OllamaProvider:
     def get_command_history(self, query: str = "", limit: int = 10):
         if query:
             return self.db.search_history(query, limit)
-        else:
-            return self.db.get_history(limit)
+        return self.db.get_history(limit=limit)
