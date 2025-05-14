@@ -6,7 +6,6 @@
 ![100% Local](https://img.shields.io/badge/privacy-100%25%20local-brightgreen)
 ![Ollama Compatible](https://img.shields.io/badge/Ollama-compatible-blue)
 ![PyPI version](https://img.shields.io/pypi/v/tacz)
-![Python versions](https://img.shields.io/pypi/pyversions/tacz)
 
 ## 🔧 How It Works
 
