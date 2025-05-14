@@ -9,6 +9,7 @@ import questionary
 import shutil
 import re
 import atexit
+import logging
 
 from rich import print as rprint
 from rich.console import Console
@@ -21,6 +22,9 @@ from tacz.config.setup import run_setup
 from tacz.llms.providers.ollama_provider import OllamaProvider
 from tacz.utils.os_detect import get_os_info, get_available_tools
 from tacz.utils.safety import has_command_chaining, is_rm_command, sanitize_command
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 _provider_instance = None
 
@@ -47,7 +51,7 @@ def show_history():
         history = provider.get_command_history(limit=20)
         
         if not history:
-            print("No command history available.")
+            logger.info("No command history available.")
             return
         
         table = Table(title="Recent Commands")
@@ -75,7 +79,7 @@ def show_history():
         console = Console()
         console.print(table)
     except Exception as e:
-        rprint(f"[red]Error showing history: {e}[/red]")
+        logger.error("Error showing history: %s", e, exc_info=True)
 
 def show_favorites():
     try:
@@ -83,7 +87,7 @@ def show_favorites():
         favorites = provider.db.search("favorite", limit=20)
         
         if not favorites:
-            print("No favorite commands saved.")
+            logger.info("No favorite commands saved.")
             return
         
         table = Table(title="Favorite Commands")
@@ -101,7 +105,7 @@ def show_favorites():
         console = Console()
         console.print(table)
     except Exception as e:
-        rprint(f"[red]Error showing favorites: {e}[/red]")
+        logger.error("Error showing favorites: %s", e, exc_info=True)
 
 def get_env_context() -> str:
     os_info = get_os_info()
@@ -192,8 +196,8 @@ def show_options(query: str):
     try:
         provider = OllamaProvider()
     except ValueError as e:
-        rprint(f"[red]Configuration error: {e}[/red]")
-        rprint("Please run 'tacz --setup' to configure Ollama settings.")
+        console.print(f"[red]Configuration error: {e}[/red]\nPlease run 'tacz --setup' to configure Ollama settings.")
+        console.print("Please run 'tacz --setup' to configure Ollama settings.")
         return
     
     live = None
@@ -244,19 +248,14 @@ def show_options(query: str):
         return
     
     if response is None:
-        rprint("[red]Failed to generate commands. Make sure Ollama is running.[/red]")
+        logger.error("Failed to generate commands. Make sure Ollama is running.")
         return
     
-    if not response.is_valid:
-        msg = response.explanation_if_not_valid or "Model could not understand your request."
-        print(f"\n{msg}")
+    if not response.is_valid or not response.commands:
+        logger.info(response.explanation_if_not_valid or "Model could not understand your request.")
         return
     
-    if not response.commands:
-        print("\nNo commands available")
-        return
-    
-    print(f"\nPlatform detected: {response.platform_detected}\n")
+    console.print(f"\nPlatform detected: {response.platform_detected}\n")
 
     choices = []
     for cmd in response.commands:

@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 from typing import Optional, Dict, Any
 from openai import OpenAI
+import logging 
 
 from tacz.config import config
 from tacz.llms.types import CommandsResponse, Command
@@ -11,6 +12,13 @@ from tacz.utils.command_db import CommandDatabase
 from tacz.utils.safety import is_dangerous_command
 from tacz.constants import PROMPT
 from tacz.config import get_db_path
+import time
+from rich.console import Console
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+console = Console()
 
 class OllamaProvider:
     def __init__(self):
@@ -27,78 +35,39 @@ class OllamaProvider:
     
     def get_options(self, prompt: str, context: str, display_callback=None) -> Optional[CommandsResponse]:
         try:
+            start = time.perf_counter()
+            with console.status("Searching...", spinner="dots"):
+                db_results = self.db.search(prompt, limit=3)
+            elapsed = time.perf_counter() - start
 
-            db_results = self.db.search(prompt, limit=3)
+            logger.info("DB Search for '%s' returned %d results in %.2fs", prompt, len(db_results), elapsed)
+            for r in db_results:
+                logger.debug("  - %s | tags: %s", r.get("command", "N/A"), r.get("tags", []))
 
-            if db_results and len(db_results) >= 1:
-                commands = []
-                for result in db_results:
-                    commands.append(Command(
-                        command=result["command"],
-                        explanation=result["explanation"],
-                        is_dangerous=bool(result["dangerous"]),
-                        danger_explanation=result["danger_reason"]
-                    ))
-                
-                platform_detected = next(
-                    (line for line in context.split("\n") if "Platform:" in line), 
-                    "unknown"
-                ).replace("Platform: ", "")
-                
-                return CommandsResponse(
-                    commands=commands,
-                    is_valid=True,
-                    platform_detected=platform_detected
-                )
-            
-            full_prompt = self.prompt_template.format(prompt=prompt, context=context)
-            
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": full_prompt}],
-                temperature=0.3,
-                max_tokens=1000,
-                timeout=60.0
-            )
-            
-            content = response.choices[0].message.content
-            
-            response_data = self._parse_response(content)
-            
-            response_data = self._enhance_with_safety_checks(response_data)
+            commands = []
+            for result in db_results:
+                commands.append(Command(
+                    command=result["command"],
+                    explanation=result["explanation"],
+                    is_dangerous=bool(result["dangerous"]),
+                    danger_explanation=result.get("danger_reason", "")
+                ))
             
             platform_detected = next(
                 (line for line in context.split("\n") if "Platform:" in line), 
                 "unknown"
             ).replace("Platform: ", "")
             
-            commands_response = CommandsResponse(
-                platform_detected=platform_detected, 
-                **response_data
+            return CommandsResponse(
+                commands=commands,
+                is_valid=True if commands else False,
+                platform_detected=platform_detected,
+                explanation_if_not_valid="No matching commands found in database." if not commands else None
             )
-            
-            if commands_response.is_valid and commands_response.commands:
-                for cmd in commands_response.commands:
-                    self.db.add_command(
-                        command=cmd.command,
-                        explanation=cmd.explanation,
-                        dangerous=cmd.is_dangerous,
-                        danger_reason=cmd.danger_explanation
-                    )
-            
-            if display_callback and commands_response.commands:
-                display_cmds = [{"cmd": cmd.command, "explanation": cmd.explanation} 
-                               for cmd in commands_response.commands]
-                display_callback(display_cmds)
-            
-            return commands_response
-            
         except Exception as e:
-            import traceback
-            print(f"Error generating commands: {e}")
-            traceback.print_exc()
+            logger.error("Error during database search: %s", e, exc_info=True)
             return None
-    
+        
     def _parse_response(self, content: str) -> Dict[str, Any]:
         try:
             return json.loads(content.strip())

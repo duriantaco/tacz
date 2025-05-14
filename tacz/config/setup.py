@@ -2,9 +2,11 @@ import questionary
 from pathlib import Path
 from typing import Dict
 from dotenv import dotenv_values
-
+import logging
 from tacz.constants import LLMProviders, PROVIDER_DEFAULTS
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def run_setup() -> None:
     config_path = Path.home() / ".taczrc"
@@ -13,7 +15,7 @@ def run_setup() -> None:
     if config_path.exists():
         existing_values = dotenv_values(config_path)  # type: ignore[assignment]
 
-    print("🚀 Welcome to Tacz! Let's set up your local command assistant.\n")
+    logger.info("🚀 Welcome to Tacz! Let's set up your local command assistant.")
 
     provider_choices = [
         questionary.Choice(
@@ -109,16 +111,16 @@ def run_setup() -> None:
     config_content = "\n".join(f"{k}={v}" for k, v in config_values.items()) + "\n"
     config_path.write_text(config_content)
 
-    print("\n✅ Configuration saved!")
+    logger.info("\n✅ Configuration saved!")
 
     if selected_provider == LLMProviders.OLLAMA:
-        print("\n💡 Next steps:")
-        print("1. Start Ollama: ollama serve")
-        print(f"2. Pull model: ollama pull {model_name}")
-        print("3. Test: tacz 'list files'")
+        logger.info("\n💡 Next steps:")
+        logger.info("1. Start Ollama: ollama serve")
+        logger.info(f"2. Pull model: ollama pull {model_name}")
+        logger.info("3. Test: tacz 'list files'")
     else:
         port = config_values["LLAMACPP_URL"].split(":")[-1].split("/")[0]
-        print("\n💡 Next steps:")
-        print("1. Download model from HuggingFace (GGUF format)")
-        print(f"2. Start server: ./server -m model.gguf -p {port}")
-        print("3. Test: tacz 'list files'")
+        logger.info("\n💡 Next steps:")
+        logger.info("1. Download model from HuggingFace (GGUF format)")
+        logger.info(f"2. Start server: ./server -m model.gguf -p {port}")
+        logger.info("3. Test: tacz 'list files'")

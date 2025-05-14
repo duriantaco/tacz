@@ -1,18 +1,19 @@
 [project]
 name = "tacz"
-version = "1.0.0"
+version = "1.0.2"
 description = "Local command assistant using Ollama"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "openai>=1.72.0",
     "pydantic>=2.10.6",
     "pyperclip>=1.9.0",
     "python-dotenv>=1.0.1",
     "questionary>=2.1.0",
     "rich>=13.9.4",
-    "keyring>=24.3.0",
-    "requests>=2.31.0"
+    "requests>=2.31.0",
+    "sentence-transformers>=2.7.0",
+    "torch>=2.2.0,<3.0",
+    "numpy>=1.26,<2.0"
 ]
 
 classifiers = [

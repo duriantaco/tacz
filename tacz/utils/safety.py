@@ -76,16 +76,12 @@ def _contains_destructive_intent(command: str) -> bool:
     return False
 
 def sanitize_command(command: str) -> str:
-    """Remove everything after the first chaining symbol and normalise wildcards."""
-    # keep text before first chaining/operator character
-    command = re.split(r'[;&|><]', command, maxsplit=1)[0].strip()
-
-    # collapse “**” to single “*”
+    """Sanitize command by removing potentially dangerous elements"""
+    command = re.sub(r'(?<!\\)[;&|].*$', '', command)
+    
     command = re.sub(r'\*{2,}', '*', command)
-
-    command = re.sub(r'(?:\*/)+\*', '*/*', command)
-
-    return command
+    
+    return command.strip()
 
 class CommandValidator:
     def __init__(self):

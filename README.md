@@ -7,23 +7,26 @@
 ![Ollama Compatible](https://img.shields.io/badge/Ollama-compatible-blue)
 ![PyPI version](https://img.shields.io/pypi/v/tacz)
 
+![TACZ Demo](assets/tacz-demo.gif)
+
 ## 🔧 How It Works
 
 Tacz combines local language models with a sophisticated command database to deliver accurate, contextual terminal commands:
 
 ### Database Architecture
 - **SQLite Storage**: All commands and history are stored locally in SQLite
-- **Full-Text Search**: Uses SQLite's FTS5 virtual tables for efficient natural language queries
+- **Full-Text Search**: Vector embeddings (BGE-small) + cosine similarity
 - **Tag System**: Commands are tagged for semantic matching even when exact wording differs
 
 ### Command Retrieval
-1. **Hybrid Search**: First attempts database lookups before calling the LLM
+1. **Hybrid Vector + Keyword search**
 2. **OS Awareness**: Filters commands by your OS (Linux/macOS/Windows)
 3. **Popularity Ranking**: Frequently used commands are prioritized in results
 
-### LLM
-- **JSON Parsing**: Processes LLM responses with multiple fallback mechanisms for reliability
-- **Command Learning**: New commands discovered via LLMs are stored in the database for future use
+### Vector Search 
+- **Embeddings**: Uses `SentenceTransformers` to convert queries to vector embeddings
+- **Similarity Ranking**: Finds commands with closest semantic meaning using cosine similarity
+- **Platform Filtering**: Only shows commands compatible with your detected OS
 
 ### Safety Mechanisms
 - **Pattern Detection**: Uses regex patterns to identify potentially dangerous operations
@@ -38,10 +41,11 @@ Tacz combines local language models with a sophisticated command database to del
 |-----------|---------|-------------|
 | **RAM** | 8GB | 16GB+ |
 | **Python** | 3.9+ | 3.11+ |
-| **Disk Space** | 2GB free | 5GB+ free |
+| **Disk Space** | 3GB free | 5GB+ free |
 | **OS** | Windows 10+, macOS 10.14+, Linux | Any recent version |
+| **Dependencies** | PyTorch, sentence_transformers | Same |
 
-Note: If you're using M1 chips or any older models, `llama` models will be slow
+**Note**: If you're using M1 chips or any older models, `llama` models will be slow. While Windows is supported, the tool is primarily optimized for Unix-like systems (Linux/macOS).
 
 ### Model Requirements
 
@@ -52,6 +56,14 @@ Different models have different memory requirements:
 | `phi3:mini` | 1.8GB | 4GB | Fast ⚡ |
 | `llama3.1:8b` | 4.7GB | 8GB | Balanced ⚖️ |
 | `llama3.1:70b` | 40GB | 64GB | Slow but powerful 🧠 |
+
+### Embedding Requirements
+
+Different models have different memory requirements:
+
+| Model | Size | RAM Required | Speed |
+|-------|------|--------------|--------|
+| `sentence-transformer` | 1GB | 1GB | Fast ⚡ |
 
 ## 🔧 Installation
 
@@ -105,9 +117,9 @@ curl -L -o model.gguf [HUGGINGFACE_MODEL_URL]
 
 ```bash
 pip install tacz
-
-tacz --setup
 ```
+
+**Important**: On first launch, a 140 MB embedding model (BAAI/bge-small-en-v1.5) will be downloaded into ~/.cache/sentence_transformers. The installation requires PyTorch and several ML libraries (~1GB). Subsequent runs are offline. **The initial load will take a bit of time, a bit under 2 minutes, so go grab a coffee or do some push ups and come back.**
 
 ## 🎮 Usage
 
@@ -132,9 +144,10 @@ tacz --favorites
 - **Enhanced safety** - Multiple layers of dangerous command detection
 - **Command history** - Track and search your commands
 - **Favorites system** - Save your most-used commands
-- **Better prompts** - Category-specific templates for better responses
 - **Command editing** - Edit commands before execution
 - **Database-powered storage** - Command history and preferences stored in SQLite
+- **Vector search** - Semantic understanding of your queries with embeddings
+
 
 ## ⚙️ Configuration
 
@@ -194,9 +207,11 @@ Tacz is designed with a local-first approach to ensure your data never leaves yo
 
 2. **Command Preloading**: The database is populated with a curated set of common terminal commands from our bundled data files
 
-3. **Command Generation**: When no matching commands are found in the database:
-   - Your query and system context are sent to your local Ollama instance
-   - Generated commands are stored in your database for future reuse
+3. **Command Search**: When you submit a query:
+   - Your request is converted to a vector embedding and searched against the command database
+   - Commands are ranked by relevance using cosine similarity
+   - Results are filtered by your current OS
+   - Currently, only database search is implemented
    - No data is ever sent to external servers
 
 4. **Learning from Usage**: As you use Tacz:
@@ -214,6 +229,12 @@ Your local SQLite database contains:
 - **Favorites**: Commands you've explicitly saved
 
 All of this data remains entirely on your machine and can be inspected or deleted at any time by accessing the database file at `~/.tacz/commands.db`.
+
+## Troubleshooting
+
+* Binary-incompat error (numpy.dtype size changed)
+
+`pip install -U 'numpy>=1.26,<2' --force-reinstall pandas scikit-learn`
 
 ## 🤝 Contributing
 
