@@ -1,9 +1,9 @@
 import pytest
 import sqlite3
 from tacz.utils.command_db import CommandDatabase
+from unittest.mock import patch
 
 def _setup_test_db(db):
-    """Helper function to properly set up test database with FTS tables."""
     cursor = db.conn.cursor()
     
     cursor.execute('''
@@ -28,12 +28,15 @@ def _setup_test_db(db):
     
     cursor.execute('''
     CREATE TRIGGER IF NOT EXISTS commands_au AFTER UPDATE ON commands BEGIN
-        UPDATE command_fts SET
-            command = new.command,
-            explanation = new.explanation,
-            category = new.category,
-            tags = (SELECT GROUP_CONCAT(tag, ' ') FROM command_tags WHERE command_id = new.id)
-        WHERE rowid = new.id;
+        DELETE FROM command_fts WHERE rowid = new.id;
+        INSERT INTO command_fts(rowid, command, explanation, category, tags)
+        VALUES (
+            new.id, 
+            new.command, 
+            new.explanation, 
+            new.category, 
+            (SELECT GROUP_CONCAT(tag, ' ') FROM command_tags WHERE command_id = new.id)
+        );
     END;
     ''')
     
@@ -167,3 +170,154 @@ def test_db_close(temp_db_path):
     with pytest.raises(sqlite3.ProgrammingError):
         cursor = db.conn.cursor()
         cursor.execute("SELECT * FROM commands")
+
+def test_detect_platform(temp_db_path):
+    """Test platform detection logic."""
+    db = CommandDatabase(temp_db_path)
+    
+    with patch('platform.system', return_value='Darwin'):
+        assert db._detect_platform() == "macos"
+    
+    with patch('platform.system', return_value='Linux'):
+        assert db._detect_platform() == "linux"
+    
+    with patch('platform.system', return_value='Windows'):
+        assert db._detect_platform() == "windows"
+    
+    with patch('platform.system', return_value='Unknown'):
+        assert db._detect_platform() == "unknown"
+
+def test_load_commands_from_json(temp_db_path):
+    """Test loading commands from JSON file."""
+    db = CommandDatabase(temp_db_path)
+    
+    with patch('pathlib.Path.exists', return_value=False), \
+         patch('builtins.print') as mock_print:
+        result = db._load_commands_from_json()
+        assert result == {}
+        mock_print.assert_called_once()
+    
+    mock_json_data = {
+        "file": [
+            {"command": "ls", "explanation": "List files", "category": "file", "platform": "linux,macos"}
+        ],
+        "system": [
+            {"command": "top", "explanation": "Show processes", "platform": "linux,macos"}
+        ]
+    }
+    
+    with patch('pathlib.Path.exists', return_value=True), \
+         patch('builtins.open', create=True), \
+         patch('json.load', return_value=mock_json_data):
+        result = db._load_commands_from_json()
+        assert len(result) == 2
+        assert result[0]["command"] == "ls"
+        assert result[0]["category"] == "file"
+        assert result[1]["command"] == "top"
+        assert result[1]["category"] == "system"
+    
+    with patch('pathlib.Path.exists', return_value=True), \
+         patch('builtins.open', create=True), \
+         patch('json.load', side_effect=Exception("JSON error")), \
+         patch('builtins.print') as mock_print:
+        result = db._load_commands_from_json()
+        assert result == []
+        mock_print.assert_called_once()
+
+def test_preload_from_json(temp_db_path):
+    """Test preloading commands from JSON structure."""
+    db = CommandDatabase(temp_db_path)
+    
+    test_commands = [
+        {
+            "command": "test-cmd",
+            "explanation": "Test command",
+            "category": "test",
+            "platform": "all",
+            "dangerous": True,
+            "danger_reason": "For testing",
+            "tags": ["test", "demo"]
+        },
+        {
+            "command": "another-cmd", 
+            "explanation": "Another test",
+            "tags": ["demo"]
+        }
+    ]
+    
+    db.preload_from_json(test_commands)
+    
+    cursor = db.conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM commands WHERE command IN (?, ?)", 
+                  ("test-cmd", "another-cmd"))
+    count = cursor.fetchone()[0]
+    assert count == 2
+    
+    cursor.execute("SELECT COUNT(*) FROM command_tags WHERE tag IN (?, ?)", 
+                  ("test", "demo"))
+    tag_count = cursor.fetchone()[0]
+    assert tag_count == 3
+
+def test_search_empty_query(temp_db_path):
+    """Test search with empty query."""
+    db = CommandDatabase(temp_db_path)
+    
+    results = db.search("")
+    assert results == []
+    
+    results = db.search("   ")
+    assert results == []
+
+def test_search_no_matches(temp_db_path):
+    """Test search with no matching results."""
+    db = CommandDatabase(temp_db_path)
+    
+    db.add_command("test command", "A test", category="test")
+    
+    results = db.search("nonexistent")
+    assert results == []
+
+def test_search_with_complex_conditions(temp_db_path):
+    """Test search with more complex conditions."""
+    with patch.object(CommandDatabase, '_preload_common_commands'):
+        db = CommandDatabase(temp_db_path)
+        
+        db.add_command("ls -la", "List all files", category="file",
+                      platform="linux,macos", tags=["list", "files"])
+    
+        db.add_command("grep -i pattern file.txt", "Case insensitive search",
+                      category="search", platform="linux,macos", tags=["grep", "search"])
+    
+        db.add_command("find . -name pattern", "Find files by name",
+                      category="search", platform="linux,macos", tags=["find", "files"])
+    
+        results = db.search("grep")
+        assert len(results) > 0
+        assert any("grep" in cmd["command"] for cmd in results)
+    
+        results = db.search("search")
+        assert len(results) >= 2
+    
+        results = db.search("files list")
+        assert any("ls" in cmd["command"] for cmd in results)
+    
+        with patch.object(db, 'current_platform', 'windows'):
+            results = db.search("list")
+            assert len(results) == 0
+
+def test_update_command_popularity(temp_db_path):
+    """Test that command popularity is updated when recording history."""
+    db = CommandDatabase(temp_db_path)
+    
+    cmd_id = db.add_command("test command", "A test")
+    
+    cursor = db.conn.cursor()
+    cursor.execute("SELECT popularity FROM commands WHERE id=?", (cmd_id,))
+    initial_popularity = cursor.fetchone()[0]
+    
+    db.record_history("test", "test command")
+    
+    cursor.execute("SELECT popularity FROM commands WHERE id=?", (cmd_id,))
+    updated_popularity = cursor.fetchone()[0]
+    
+    assert updated_popularity == initial_popularity + 1

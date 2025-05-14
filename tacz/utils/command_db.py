@@ -92,15 +92,18 @@ class CommandDatabase:
         ''')
         
         cursor.execute('''
-        CREATE TRIGGER IF NOT EXISTS commands_au AFTER UPDATE ON commands BEGIN
-            UPDATE command_fts SET
-                command = new.command,
-                explanation = new.explanation,
-                category = new.category,
-                tags = (SELECT GROUP_CONCAT(tag, ' ') FROM command_tags WHERE command_id = new.id)
-            WHERE rowid = new.id;
-        END;
-        ''')
+            CREATE TRIGGER IF NOT EXISTS commands_au AFTER UPDATE ON commands BEGIN
+                DELETE FROM command_fts WHERE rowid = new.id;
+                INSERT INTO command_fts(rowid, command, explanation, category, tags)
+                VALUES (
+                    new.id, 
+                    new.command, 
+                    new.explanation, 
+                    new.category, 
+                    (SELECT GROUP_CONCAT(tag, ' ') FROM command_tags WHERE command_id = new.id)
+                );
+            END;
+            ''')
         
         # indexed
         cursor.execute('''
@@ -207,8 +210,8 @@ class CommandDatabase:
         self.conn.commit()
     
     def add_command(self, command: str, explanation: str, category: str = None, 
-           platform: str = None, dangerous: bool = False, 
-           danger_reason: str = None, tags: List[str] = None) -> int:
+       platform: str = None, dangerous: bool = False, 
+       danger_reason: str = None, tags: List[str] = None) -> int:
         cursor = self.conn.cursor()
         
         cursor.execute(
@@ -224,10 +227,9 @@ class CommandDatabase:
                     (command_id, tag.lower())
                 )
             
-            tags_str = ' '.join(tags)
             cursor.execute(
-                "UPDATE command_fts SET tags = ? WHERE rowid = ?",
-                (tags_str, command_id)
+                "UPDATE commands SET command = command WHERE id = ?",
+                (command_id,)
             )
         
         self.conn.commit()

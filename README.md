@@ -1,4 +1,4 @@
-# Tacz 🔍 (Local-Only Version)
+# Tacz 🔍 - Terminal Assistant for Commands Zero Effort (Local-Only Version)
 
 *Remember terminal commands using natural language with fully local LLMs*
 
