@@ -13,7 +13,6 @@ dependencies = [
     "requests>=2.31.0",
     "sentence-transformers>=2.7.0",
     "torch>=2.2.0,<3.0",
-    "numpy>=1.26,<2.0"
 ]
 
 classifiers = [
@@ -35,3 +34,7 @@ Repository = "https://github.com/duriantaco/tacz"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["chunks"]
